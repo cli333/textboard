@@ -1,0 +1,17 @@
+.post-item {
+  margin-bottom: 15px;
+}
+
+.post-item-wrapper {
+  display: grid;
+  grid-template-columns: 10% 90%;
+}
+
+.post-item-header {
+  font-weight: lighter;
+}
+
+.post-item-link {
+  font-size: larger;
+  font-weight: 500;
+}

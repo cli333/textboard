@@ -1,0 +1,14 @@
+.main {
+  display: grid;
+  grid-template-columns: 75% 35%;
+  margin-top: 15px;
+}
+
+.main-right {
+  margin-left: 15px;
+}
+
+.main-left-header {
+  margin-bottom: 15px;
+  display: flex;
+}

@@ -1,28 +1,16 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import MainPage from "./components/Main/MainPage";
+import Header from "./components/Header/Header";
 
 function App() {
   return (
-    <div className="d-flex justify-content-center p-2">
-      <form>
-        <div className="form-row">
-          <div className="col">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="First name"
-            />
-          </div>
-          <div className="col">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Last name"
-            />
-          </div>
-        </div>
-      </form>
-    </div>
+    <BrowserRouter>
+      <Header />
+      <Switch>
+        <Route exact path="/" component={MainPage} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 
