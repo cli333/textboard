@@ -1,0 +1,17 @@
+.comment {
+  display: grid;
+  grid-template-columns: 10% 90%;
+}
+
+.comment-left {
+  margin-right: 10px;
+}
+
+.comment-left-item {
+  display: flex;
+  justify-content: center;
+}
+
+.comment-children {
+  margin-top: 15px;
+}

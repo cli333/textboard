@@ -7,6 +7,15 @@
   grid-template-columns: 10% 90%;
 }
 
+.post-item-votes {
+  margin-right: 10px;
+}
+
+.post-item-votes-item {
+  display: flex;
+  justify-content: center;
+}
+
 .post-item-header {
   font-weight: lighter;
 }
@@ -14,4 +23,8 @@
 .post-item-link {
   font-size: larger;
   font-weight: 500;
+}
+
+.post-item-right {
+  margin-left: 10px;
 }

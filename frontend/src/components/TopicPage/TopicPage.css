@@ -1,4 +1,4 @@
-.main {
+.topic {
   position: absolute;
   right: 30%;
   width: 50%;
@@ -7,11 +7,14 @@
   margin-top: 15px;
 }
 
-.main-right {
+.topic-jumbo {
+  text-align: center;
+}
+
+.topic-right {
   margin-left: 15px;
 }
 
-.main-left-header {
+.topic-left {
   margin-bottom: 15px;
-  display: flex;
 }

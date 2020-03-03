@@ -1,7 +1,7 @@
 import React from "react";
 import "./MainPage.css";
-import TopicsBar from "../TopicsBar/TopicsBar";
-import PostItem from "../PostItem/PostItem";
+import TopicsBar from "./TopicsBar/TopicsBar";
+import PostItem from "./PostItem/PostItem";
 
 const dummyPosts = [
   {
@@ -23,7 +23,7 @@ const dummyPosts = [
 
 const MainPage = () => {
   return (
-    <div className="container main">
+    <div className="main">
       <div className="main-left">
         <div className="list-group main-left-header">
           <span className="list-group-item">Recent Posts</span>

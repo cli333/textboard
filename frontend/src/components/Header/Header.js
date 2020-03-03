@@ -1,10 +1,11 @@
 import React from "react";
 import "./Header.css";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <nav className="navbar navbar-dark bg-dark">
-      <a className="navbar-brand" href="#">
+      <Link className="navbar-brand" to="/">
         <img
           src=""
           width="30"
@@ -13,7 +14,7 @@ const Header = () => {
           alt=""
         />
         TextBoard
-      </a>
+      </Link>
       <form className="form-inline my-2 my-lg-0">
         <input
           className="form-control mr-sm-2"
