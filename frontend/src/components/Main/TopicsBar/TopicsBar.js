@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./TopicsBar.css";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
 import TopicItem from "./TopicItem/TopicItem";
 
-const TopicsBar = () => {
+const TopicsBar = ({ history }) => {
   const [name, setName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [topics, setTopics] = useState([]);
@@ -21,6 +22,7 @@ const TopicsBar = () => {
     axios
       .post("http://localhost:5000/topics/new", { name })
       .then(() => {
+        history.push(`/topic/${name}`);
         setName("");
         setIsSubmitting(false);
       })
@@ -29,14 +31,15 @@ const TopicsBar = () => {
 
   return (
     <React.Fragment>
-      <div className="list-group topicsbar-item">
+      <div className="list-group topicsbar-top">
         <span className="list-group-item list-group-item-danger">
           Popular Topics
         </span>
-        {/* change the topicId later*/}
-        {topics.map((topic, index) => (
-          <TopicItem key={`${topic.name} ${index}`} {...topic} />
-        ))}
+        <div className="topicsbar-scroll">
+          {topics.map((topic, index) => (
+            <TopicItem key={`${topic.name} ${index}`} {...topic} />
+          ))}
+        </div>
       </div>
 
       <form className="input-group mb-3" onSubmit={e => handleSubmit(e)}>
@@ -66,4 +69,4 @@ const TopicsBar = () => {
   );
 };
 
-export default TopicsBar;
+export default withRouter(TopicsBar);

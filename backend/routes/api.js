@@ -4,7 +4,6 @@ const router = express.Router();
 let Comment = require("../models/comment.model");
 let Topic = require("../models/topic.model");
 
-// get 5 topics sorted by most comments
 // NEED TO SORT
 router.route("/topics").get((req, res) => {
   Topic.find()
@@ -34,22 +33,22 @@ router.route("/topics/:name").get((req, res) => {
 router.route("/topics/:name/comments").get((req, res) => {
   const { name } = req.params;
   Comment.find({ topicName: name })
+    .then(comments => {
+      res.json(comments);
+    })
+    .catch(error => res.status(400).json(`Error: ${error}`));
+});
+
+// NEED TO SORT BY DATE
+router.route("/comments").get((req, res) => {
+  Comment.find()
     .then(comments => res.json(comments))
     .catch(error => res.status(400).json(`Error: ${error}`));
 });
 
-// get 10-20 comments?
-// NEED TO SORT BY DATE
-router.route("/comments").get((req, res) => {
-  Comment.find()
-    .then(comments => res.json(comments.slice(0, 20)))
-    .catch(error => res.status(400).json(`Error: ${error}`));
-});
-
 // create a new comment
-router.route("/:topicId/:parentId/new").post((req, res) => {
-  const { text } = req.body;
-  const { topicId, parentId } = req.params;
+router.route("/comments/new").post((req, res) => {
+  const { text, topicId, topicName } = req.body;
   // update the topic count
   Topic.findById(topicId).then(topic => {
     topic.commentCount++;
@@ -58,17 +57,29 @@ router.route("/:topicId/:parentId/new").post((req, res) => {
       .then(() => res.json("Topic updated"))
       .catch(error => res.status(400).json(`Error: ${error}`));
   });
-
   // create the comment
   const newComment = new Comment({
     topicId,
-    parentId,
+    topicName,
     text
   });
   newComment
     .save()
     .then(() => res.json("Comment added"))
     .catch(error => res.status(400).json(`Error: ${error}`));
+});
+
+// update comment votes
+router.route("/comments/update/:id").post((req, res) => {
+  const { votes } = req.body;
+  const { id } = req.params;
+  Comment.findById(id).then(comment => {
+    comment.votes = votes;
+    comment
+      .save()
+      .then(() => res.json("Comment updated"))
+      .catch(error => res.status(400).json(`Error: ${error}`));
+  });
 });
 
 module.exports = router;

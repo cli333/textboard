@@ -3,6 +3,10 @@
   grid-template-columns: 10% 90%;
 }
 
+div:target {
+  background-color: red;
+}
+
 .comment-left {
   margin-right: 10px;
 }

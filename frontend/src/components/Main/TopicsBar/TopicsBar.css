@@ -1,5 +1,14 @@
-.topicsbar-item {
+.topicsbar-top {
   margin-bottom: 15px;
+}
+
+.topicsbar-scroll {
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.topicsbar-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 .topicsbar-button {

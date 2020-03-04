@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import "./Comment.css";
 import { timeElapsed } from "../../../utils/utils";
 
-const Comment = ({ votes, text, createdAt }) => {
+const Comment = ({ votes, text, createdAt, _id }) => {
   const [isFormShown, setIsFormShown] = useState(false);
 
   return (
-    <div className="list-group-item comment">
+    <div className="list-group-item comment" id={_id}>
       <div className="comment-left">
         <div className="comment-left-item">⬆</div>
         <div className="comment-left-item">{votes}</div>

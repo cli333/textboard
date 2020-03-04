@@ -1,3 +1,25 @@
 .sidebar-item {
   font-weight: 500;
 }
+
+.sidebar-form {
+  margin-top: 15px;
+  padding: 15px 15px 15px;
+}
+
+.sidebar-form-input {
+  margin-bottom: 15px;
+}
+
+.sidebar-form-button {
+  margin: 0;
+  width: 100px;
+}
+
+.sidebar-form-group {
+  margin-bottom: 0;
+}
+
+.sidebar-form-group > textarea {
+  height: 100px;
+}

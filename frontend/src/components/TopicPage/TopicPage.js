@@ -17,7 +17,7 @@ const TopicPage = ({
     axios
       .get(`http://localhost:5000/topics/${topic}/comments`)
       .then(res => setComments(res.data));
-  }, []);
+  }, [topic]);
 
   return (
     <React.Fragment>
@@ -32,11 +32,16 @@ const TopicPage = ({
             </span>
           </div>
 
-          <div className="card list-group list-group-flush topic-left">
-            {comments.length &&
-              comments.map(comment => (
-                <Comment key={comment._id} {...comment} />
-              ))}
+          <div
+            className={`${
+              comments.length ? "card" : ""
+            } list-group list-group-flush topic-left`}
+          >
+            {comments.length
+              ? comments.map(comment => (
+                  <Comment key={comment._id} {...comment} />
+                ))
+              : null}
           </div>
         </div>
 
