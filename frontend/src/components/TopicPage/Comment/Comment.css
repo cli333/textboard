@@ -15,3 +15,29 @@
 .comment-children {
   margin-top: 15px;
 }
+
+.comment-right {
+  padding-left: 15px;
+  width: 100%;
+  position: relative;
+}
+
+.comment-right-body-button {
+  color: blue;
+  cursor: pointer;
+}
+
+.comment-right-body-form {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.comment-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.comment-right-body-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}

@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./TopicPage.css";
+import axios from "axios";
 import SideBar from "./SideBar/SideBar";
 import Comment from "./Comment/Comment";
 import { pluckTopic } from "../../utils/utils";
@@ -10,10 +11,12 @@ const TopicPage = ({
   }
 }) => {
   const topic = pluckTopic(pathname);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    // fetch the topic comment from backend
-    // when a submit action, refetch the current topic
+    axios
+      .get(`http://localhost:5000/topics/${topic}/comments`)
+      .then(res => setComments(res.data));
   }, []);
 
   return (
@@ -24,19 +27,21 @@ const TopicPage = ({
       <div className="topic">
         <div className="topic-left">
           <div className="list-group topic-left">
-            <span className="list-group-item list-group-item-dark">
+            <span className="list-group-item list-group-item-info">
               Recent Comments
             </span>
           </div>
 
           <div className="card list-group list-group-flush topic-left">
-            <Comment children={[1, 2, 3]} />
-            <Comment />
+            {comments.length &&
+              comments.map(comment => (
+                <Comment key={comment._id} {...comment} />
+              ))}
           </div>
         </div>
 
         <div className="topic-right">
-          <SideBar />
+          <SideBar topic={topic} />
         </div>
       </div>
     </React.Fragment>

@@ -1,23 +1,24 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import "./TopicItem.css";
+import { withRouter } from "react-router-dom";
+import { timeElapsed } from "../../../../utils/utils";
 
-const TopicItem = ({ topicId }) => {
+const TopicItem = ({ name, history, updatedAt }) => {
+  const handleClick = () => {
+    history.push(`/topic/${name}`);
+  };
+
   return (
     <div className="list-group-item">
       <div className="d-flex w-100 justify-content-between">
-        {/* on click go to backend and set the current topic */}
-        <Link to={`/topic/${topicId}`}>
-          <h5 className="mb-1">{topicId}</h5>
-        </Link>
+        <div onClick={() => handleClick()}>
+          <h5 className="mb-1 topic-item-link">/{name}</h5>
+        </div>
 
-        <small>(3 days ago)</small>
+        <small>{timeElapsed(updatedAt)} ago</small>
       </div>
-      <p className="mb-1">
-        Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget
-        risus varius blandit.
-      </p>
     </div>
   );
 };
 
-export default TopicItem;
+export default withRouter(TopicItem);

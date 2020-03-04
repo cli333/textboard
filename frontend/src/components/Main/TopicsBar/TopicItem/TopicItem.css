@@ -1,0 +1,4 @@
+.topic-item-link:hover {
+  cursor: pointer;
+  color: blue;
+}
