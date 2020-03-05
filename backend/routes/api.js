@@ -69,17 +69,4 @@ router.route("/comments/new").post((req, res) => {
     .catch(error => res.status(400).json(`Error: ${error}`));
 });
 
-// update comment votes
-router.route("/comments/update/:id").post((req, res) => {
-  const { votes } = req.body;
-  const { id } = req.params;
-  Comment.findById(id).then(comment => {
-    comment.votes = votes;
-    comment
-      .save()
-      .then(() => res.json("Comment updated"))
-      .catch(error => res.status(400).json(`Error: ${error}`));
-  });
-});
-
 module.exports = router;

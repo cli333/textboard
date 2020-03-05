@@ -1,31 +1,18 @@
 import React from "react";
 import "./PostItem.css";
-import axios from "axios";
 import { withRouter, Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import { timeElapsed } from "../../../utils/utils";
+import { socket } from "../../../App";
 
-const PostItem = ({
-  votes,
-  topicName,
-  text,
-  createdAt,
-  _id,
-  history,
-  location
-}) => {
+const PostItem = ({ votes, topicName, text, createdAt, _id }) => {
   const handleClick = type => {
-    if (type === "up") votes++;
-    if (type === "down") votes--;
-    axios
-      .post(`http://localhost:5000/comments/update/${_id}`, { votes })
-      .then(() => {
-        // reload
-        // history.replace(`/reload`);
-        // setTimeout(() => {
-        //   history.replace(location.pathname);
-        // });
-      });
+    let newVotes = votes;
+    if (type === "up") newVotes++;
+    if (type === "down") newVotes--;
+
+    socket.emit("votes updated", { votes: newVotes, _id });
+    socket.on("votes updated", result => result);
   };
 
   return (

@@ -10,7 +10,6 @@ const TopicsBar = ({ history }) => {
   const [topics, setTopics] = useState([]);
 
   useEffect(() => {
-    // fetch 5 topics with the most comments
     axios.get("http://localhost:5000/topics").then(res => setTopics(res.data));
   }, []);
 
@@ -32,10 +31,8 @@ const TopicsBar = ({ history }) => {
   return (
     <React.Fragment>
       <div className="list-group topicsbar-top">
-        <span className="list-group-item list-group-item-danger">
-          Popular Topics
-        </span>
-        <div className="topicsbar-scroll">
+        <span className="list-group-item list-group-item-danger">Topics</span>
+        <div className="topicsbar-scroll border rounded-lg">
           {topics.map((topic, index) => (
             <TopicItem key={`${topic.name} ${index}`} {...topic} />
           ))}

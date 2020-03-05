@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import "./MainPage.css";
 import axios from "axios";
+import { socket } from "../../App";
 import { context } from "../../context/Provider";
 import TopicsBar from "./TopicsBar/TopicsBar";
 import PostItem from "./PostItem/PostItem";
@@ -21,6 +22,15 @@ const MainPage = () => {
       .then(res => setComments(res.data))
       .catch(err => console.log(err));
   }, []);
+
+  useEffect(() => {
+    socket.on("votes updated", () => {
+      axios
+        .get("http://localhost:5000/comments")
+        .then(res => setComments(res.data))
+        .catch(err => console.log(err));
+    });
+  });
 
   const displayComments = () => {
     return comments
