@@ -4,8 +4,6 @@
 
 A simple internet message board.
 
-[Try it out]()
-
 <li>Create topics.</li>
 <li>Create and vote on comments.</li>
 
