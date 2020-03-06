@@ -1,36 +1,17 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import "./MainPage.css";
-import axios from "axios";
-import { socket } from "../../App";
 import { context } from "../../context/Provider";
 import TopicsBar from "./TopicsBar/TopicsBar";
 import PostItem from "./PostItem/PostItem";
 
 const MainPage = () => {
-  const [comments, setComments] = useState([]);
-  const { commentsFilter, setCommentsFilter } = useContext(context);
+  const { commentsFilter, setCommentsFilter, comments } = useContext(context);
   const [text, setText] = useState("");
 
   const handleChange = e => {
     setText(e.target.value);
     setCommentsFilter(e.target.value);
   };
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/comments")
-      .then(res => setComments(res.data))
-      .catch(err => console.log(err));
-  }, []);
-
-  useEffect(() => {
-    socket.on("votes updated", () => {
-      axios
-        .get("http://localhost:5000/comments")
-        .then(res => setComments(res.data))
-        .catch(err => console.log(err));
-    });
-  });
 
   const displayComments = () => {
     return comments
@@ -66,7 +47,7 @@ const MainPage = () => {
               />
             </span>
           </div>
-          {comments.length && displayComments()}
+          {comments.length ? displayComments() : null}
         </div>
 
         <div className="main-right">

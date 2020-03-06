@@ -45,3 +45,11 @@ div:target {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+
+.comment-left > .up {
+  cursor: pointer;
+}
+
+.comment-left > .down {
+  cursor: pointer;
+}

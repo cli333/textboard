@@ -27,8 +27,11 @@ io.on("connection", socket => {
       });
     });
   });
+
+  socket.on("comment added", () => {
+    io.emit("comment added");
+  });
 });
-//
 
 app.use(cors());
 app.use(express.json());

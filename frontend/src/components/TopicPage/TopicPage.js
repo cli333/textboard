@@ -4,6 +4,7 @@ import axios from "axios";
 import SideBar from "./SideBar/SideBar";
 import Comment from "./Comment/Comment";
 import { pluckTopic } from "../../utils/utils";
+import { socket } from "../../context/Provider";
 
 const TopicPage = ({
   history: {
@@ -18,6 +19,19 @@ const TopicPage = ({
       .get(`http://localhost:5000/topics/${topic}/comments`)
       .then(res => setComments(res.data));
   }, [topic]);
+
+  useEffect(() => {
+    socket.on("comment added", () => {
+      axios
+        .get(`http://localhost:5000/topics/${topic}/comments`)
+        .then(res => setComments(res.data));
+    });
+    socket.on("votes updated", () => {
+      axios
+        .get(`http://localhost:5000/topics/${topic}/comments`)
+        .then(res => setComments(res.data));
+    });
+  });
 
   return (
     <React.Fragment>

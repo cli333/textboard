@@ -1,18 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./PostItem.css";
+import { context } from "../../../context/Provider";
 import { withRouter, Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import { timeElapsed } from "../../../utils/utils";
-import { socket } from "../../../App";
 
 const PostItem = ({ votes, topicName, text, createdAt, _id }) => {
+  const { socket } = useContext(context);
   const handleClick = type => {
     let newVotes = votes;
     if (type === "up") newVotes++;
     if (type === "down") newVotes--;
 
     socket.emit("votes updated", { votes: newVotes, _id });
-    socket.on("votes updated", result => result);
   };
 
   return (
@@ -20,7 +20,6 @@ const PostItem = ({ votes, topicName, text, createdAt, _id }) => {
       <div className="list-group-item post-item-wrapper">
         <div className="post-item-votes">
           <div
-            name="up"
             className="post-item-votes-item up"
             onClick={() => handleClick("up")}
           >
@@ -28,7 +27,6 @@ const PostItem = ({ votes, topicName, text, createdAt, _id }) => {
           </div>
           <div className="post-item-votes-item">{votes}</div>
           <div
-            name="down"
             className="post-item-votes-item down"
             onClick={() => handleClick("down")}
           >

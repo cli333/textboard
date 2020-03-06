@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./SideBar.css";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
+import { context } from "../../../context/Provider";
 
-const SideBar = ({ topic, history, location }) => {
+const SideBar = ({ topic }) => {
   const [currentTopic, setCurrentTopic] = useState(null);
   const [text, setText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { socket } = useContext(context);
 
   useEffect(() => {
     axios
@@ -14,8 +16,15 @@ const SideBar = ({ topic, history, location }) => {
       .then(res => setCurrentTopic(res.data));
   }, [topic]);
 
+  useEffect(() => {
+    socket.on("comment added", () => {
+      axios
+        .get(`http://localhost:5000/topics/${topic}`)
+        .then(res => setCurrentTopic(res.data));
+    });
+  });
+
   const handleSubmit = e => {
-    // do some content validation
     e.preventDefault();
     if (isLoading) return;
     setIsLoading(true);
@@ -29,11 +38,7 @@ const SideBar = ({ topic, history, location }) => {
       .then(() => {
         setIsLoading(false);
         setText("");
-        // refresh the page
-        // history.replace(`/reload`);
-        // setTimeout(() => {
-        //   history.replace(location.pathname);
-        // });
+        socket.emit("comment added");
       })
       .catch(err => console.log(err));
   };

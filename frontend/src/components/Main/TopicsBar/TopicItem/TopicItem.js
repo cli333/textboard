@@ -3,7 +3,7 @@ import "./TopicItem.css";
 import { withRouter } from "react-router-dom";
 import { timeElapsed } from "../../../../utils/utils";
 
-const TopicItem = ({ name, history, updatedAt }) => {
+const TopicItem = ({ name, history, createdAt }) => {
   const handleClick = () => {
     history.push(`/topic/${name}`);
   };
@@ -15,7 +15,7 @@ const TopicItem = ({ name, history, updatedAt }) => {
           <h5 className="mb-1 topic-item-link">/{name}</h5>
         </div>
 
-        <small>{timeElapsed(updatedAt)} ago</small>
+        <small>{timeElapsed(createdAt)} ago</small>
       </div>
     </div>
   );

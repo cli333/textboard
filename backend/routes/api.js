@@ -4,14 +4,15 @@ const router = express.Router();
 let Comment = require("../models/comment.model");
 let Topic = require("../models/topic.model");
 
-// NEED TO SORT
+// get topics
 router.route("/topics").get((req, res) => {
   Topic.find()
+    .sort({ createdAt: 1 })
     .then(topics => res.json(topics))
     .catch(error => res.status(400).json(`Error: ${error}`));
 });
 
-// create a topic
+// create topic
 router.route("/topics/new").post((req, res) => {
   const { name } = req.body;
   const newTopic = new Topic({ name });
@@ -33,31 +34,28 @@ router.route("/topics/:name").get((req, res) => {
 router.route("/topics/:name/comments").get((req, res) => {
   const { name } = req.params;
   Comment.find({ topicName: name })
+    .sort({ createdAt: -1 })
     .then(comments => {
       res.json(comments);
     })
     .catch(error => res.status(400).json(`Error: ${error}`));
 });
 
-// NEED TO SORT BY DATE
+// get comments
 router.route("/comments").get((req, res) => {
   Comment.find()
+    .sort({ createdAt: -1 })
     .then(comments => res.json(comments))
     .catch(error => res.status(400).json(`Error: ${error}`));
 });
 
-// create a new comment
+// create a comment
 router.route("/comments/new").post((req, res) => {
   const { text, topicId, topicName } = req.body;
-  // update the topic count
   Topic.findById(topicId).then(topic => {
     topic.commentCount++;
-    topic
-      .save()
-      .then(() => res.json("Topic updated"))
-      .catch(error => res.status(400).json(`Error: ${error}`));
+    topic.save().catch(error => res.status(400).json(`Error: ${error}`));
   });
-  // create the comment
   const newComment = new Comment({
     topicId,
     topicName,

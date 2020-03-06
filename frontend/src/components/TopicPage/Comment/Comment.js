@@ -1,48 +1,38 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import "./Comment.css";
 import { timeElapsed } from "../../../utils/utils";
+import { context } from "../../../context/Provider";
 
 const Comment = ({ votes, text, createdAt, _id }) => {
-  const [isFormShown, setIsFormShown] = useState(false);
+  const { socket } = useContext(context);
+
+  const handleClick = type => {
+    let newVotes = votes;
+    if (type === "up") newVotes++;
+    if (type === "down") newVotes--;
+
+    socket.emit("votes updated", { votes: newVotes, _id });
+  };
 
   return (
     <div className="list-group-item comment" id={_id}>
       <div className="comment-left">
-        <div className="comment-left-item">⬆</div>
+        <div className="comment-left-item up" onClick={() => handleClick("up")}>
+          ⬆
+        </div>
         <div className="comment-left-item">{votes}</div>
-        <div className="comment-left-item">⬇</div>
+        <div
+          className="comment-left-item down"
+          onClick={() => handleClick("down")}
+        >
+          ⬇
+        </div>
       </div>
       <div className="comment-right">
         <div className="comment-header">
           <span>{timeElapsed(createdAt)} ago</span>
         </div>
-        <div className="comment-right-body">
-          {text}
-          {!isFormShown && (
-            <div
-              className="comment-right-body-button"
-              onClick={() => setIsFormShown(true)}
-            >
-              <button className="btn btn-outline-primary">Reply</button>
-            </div>
-          )}
-          {isFormShown && (
-            <form className="comment-right-body-form">
-              <div className="form-group">
-                <textarea type="text" className="form-control"></textarea>
-              </div>
-              <div className="btn-group">
-                <div
-                  className="btn btn-outline-danger"
-                  onClick={() => setIsFormShown(false)}
-                >
-                  Close
-                </div>
-                <button className="btn btn-outline-success">Submit</button>
-              </div>
-            </form>
-          )}
-        </div>
+        <div className="comment-right-body">{text}</div>
       </div>
     </div>
   );

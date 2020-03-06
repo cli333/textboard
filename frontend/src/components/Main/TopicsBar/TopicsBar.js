@@ -14,7 +14,9 @@ const TopicsBar = ({ history }) => {
   }, []);
 
   const handleSubmit = e => {
-    // do some topic validation here
+    if (name.length < 5) {
+      setName("Name must be at least ");
+    }
     e.preventDefault();
     if (isSubmitting) return;
     setIsSubmitting(true);
